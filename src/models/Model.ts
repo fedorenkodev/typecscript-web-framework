@@ -1,6 +1,6 @@
 import { AxiosPromise, AxiosResponse } from 'axios';
 
-type Callback<T> = (data?: any) => void;
+export type Callback<T> = (data?: any) => void;
 
 export interface IHasId {
 	id?: number;

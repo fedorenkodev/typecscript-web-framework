@@ -1,6 +1,4 @@
-import { IEventsManager } from './Model';
-
-type Callback<T> = (data: T | []) => void;
+import { Callback, IEventsManager } from './Model';
 
 export class EventsManager<T> implements IEventsManager<T> {
 	private listeners: { [key: string]: Callback<T>[] } = {};
@@ -25,7 +23,7 @@ export class EventsManager<T> implements IEventsManager<T> {
 		}
 	}
 
-	trigger = (eventName: string, data?: T | []): void => {
+	trigger = (eventName: string, data?: any): void => {
 		if (this.listeners[eventName]) {
 			for (let cb of this.listeners[eventName]) {
 				cb(data ? data : []);

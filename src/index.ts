@@ -1,26 +1,21 @@
-import { User } from './models/User';
-import { UsersCollection } from "./models/UsersCollection";
+import { UserList } from './views/UserList';
+import { Collection } from './models/Collection';
+import { UserProps, User } from './models/User';
+import { EventsManager } from "./models/EventsManager";
 
-const user = new User({ id: 1 });
+const users = new Collection(
+	'http://localhost:3000/users',
+	(json: UserProps) => {
+		return new User(json);
+	},
+	new EventsManager()
+);
 
-user.addListener('fetched', (data) => console.log(data))
+users.addListener('fetched', () => {
+	const root = document.getElementById('root');
 
-user.fetch().then(() => {
-	console.log('User fetched.')
+
+	if (root) {
+		new UserList(root, users).render();
+	}
 });
-
-const users = new UsersCollection();
-
-users.addListener('fetched', (data) => console.log(data))
-
-users.fetch().then(() => {
-	console.log('Users Collection fetched.')
-});
-
-/*
-user.sync.fetch(1);
-
-user.attributes.set({ name: 'Dima' });
-user.attributes.get('id');
-
-user.sync.save(user.attributes);*/

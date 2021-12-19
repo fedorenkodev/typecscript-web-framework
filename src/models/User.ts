@@ -19,4 +19,10 @@ export class User extends Model<UserProps>{
 			new APISync<UserProps>(rootUrl),
 		);
 	}
+
+	setRandomAge() {
+		const age = Math.round(Math.random() * 100);
+
+		this.set({ age })
+	}
 }
